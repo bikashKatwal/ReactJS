@@ -2,43 +2,16 @@ import React,{ Component } from 'react';
 import ReactDOM from 'react-dom';
 
 
-function Message(props){
-    if(props.value){
-        return  <h1>This is first message</h1>
-    }else{
-        return  <h1>This is second message</h1>
-    }
+const cartoons=['Pikachu','Alladin','Tom'];
+
+function ToonList(props){
+    const listCartoon=props.cartoon;
+
+    return <ul>{listCartoon.map((cartoon, index)=>
+        <li key={index}>{cartoon}</li>
+    )}</ul>
 }
 
-class Btn extends Component{
-    constructor(props){
-        super(props);
 
-        this.state={
-            value:true
-        }
-    }
-
-    handleClick(){
-
-        this.setState({
-           value: !this.state.value
-       });
-    }
-
-    render(){
-        return(
-          <div>
-              <button onClick={this.handleClick.bind(this)}>Change the Message</button>
-                <Message value={this.state.value}/>
-          </div>
-
-        );
-    }
-
-
-}
-ReactDOM.render(
-    <Btn/>,
-    document.getElementById('root')
-);
+ReactDOM.render(<ToonList cartoon={cartoons}/>,
+    document.getElementById('root'));
