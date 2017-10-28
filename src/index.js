@@ -1,31 +1,23 @@
 import React,{ Component } from 'react';
 import ReactDOM from 'react-dom';
 
-class Toggle extends Component{
-    constructor(props){
-        super(props);
-        this.state={
-            isToggleOn:true
-        }
-    }
-    handleEvent=()=>{
-        this.setState(prevState =>({
-            isToggleOn:!prevState.isToggleOn
-        }));
-    };
+function Mailbox(props){
 
-    render(){
-        return(
-            <div>
-                <button onClick={this.handleEvent.bind(this)}>
-                    {this.state.isToggleOn?'ON':'OFF'}
-                </button>
-            </div>
-        );
-    }
+    const unreadMessage=props.unreadMessage;
+    return(
+        <div>
+            <h1>Hello!</h1>
+            {
+                unreadMessage.length>0 &&
+                    <h2>you have {unreadMessage.length} unread message</h2>
+            }
+        </div>
+    );
 }
 
-ReactDOM.render(<Toggle />,
+const message=['React','Re: React', 'Re:Re: React'];
+
+ReactDOM.render(<Mailbox unreadMessage={message}/>,
         document.getElementById('root'));
 
 
