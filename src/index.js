@@ -1,69 +1,40 @@
 import React,{ Component } from 'react';
 import ReactDOM from 'react-dom';
 
+function formatDate(date){
+    return date.toLocaleDateString();
+}
 
-class Calculator extends Component{
-    constructor(props){
-        super(props);
-        this.state={
-            scale:'c',
-            temp:0
-        }
+const comment={
+    date: new Date(),
+    text: 'I hope you enjoy learning React !!',
+    authors:{
+        name:'Hello Kitty',
+        avatarUrl: 'http://placekitten.com/g/64/64'
     }
-
-    handleCelsius =(e)=>{
-        this.setState({
-            scale:'c',
-            temp:e.target.value
-        });
-    };
-
-    handleFahrenheit =(e)=>{
-        this.setState({
-            scale:'f',
-            temp:e.target.value
-        });
-    };
-
-    render(){
-        const temp=this.state.temp;
-        const scale=this.state.scale;
-        const celsius = scale==='f'? convert(temp,toCelsius): temp;
-        const fahrenheit = scale==='c'? convert(temp,toFahrenheit): temp;
-
-        return(
-            <div>
-                <Inputs scaleName={"Celsius"} value={celsius} func={this.handleCelsius}/>
-                <Inputs scaleName={"Fahrenheit"} value={fahrenheit} func={this.handleFahrenheit}/>
-            </div>
-
-        );
-    }
-}
-
-function convert(temp, convertFunction){
-    convertFunction(temp);
-}
-
-function toCelsius(fahrenheit){
-    return(fahrenheit - 32) * 5/9;
-}
-
-function toFahrenheit(celsius){
-    return(celsius * 9/5) + 32;
 };
 
-class Inputs extends Component{
-    render(){
-        return(
-            <fieldset>
-                <legend>Scale {this.props.scaleName}</legend>
-                <input value={this.props.value} onChange={this.props.func}/>
-            </fieldset>
-        );
-    }
+function Comment(props){
+    return(
+        <div className="Comment">
+            <div className="UserInfo">
+                <img className="Avatar" src={props.author.avatarUrl}
+                     alt={props.author.name}/>
+                <div className="UserInfo-name">
+                    {props.author.name}
+                </div>
+                <div className="Comment-date">
+                    {formatDate(props.date)}
+                </div>
+            </div>
+        </div>
+    );
 }
 
+ReactDOM.render(<Comment
+    date={comment.date}
+    text = {comment.text}
+    author={comment.authors}/>,
+        document.getElementById('root'));
 
-ReactDOM.render(<Calculator />,
-    document.getElementById('root'));
+
