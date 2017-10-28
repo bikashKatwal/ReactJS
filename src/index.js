@@ -1,56 +1,43 @@
 import React,{ Component } from 'react';
 import ReactDOM from 'react-dom';
 
-function formatDate(date){
-    return date.toLocaleDateString();
-}
+class Clock extends Component{
 
-function Avatar(props){
-    return(
-        <img className="Avatar"
-             src={props.userFromComment.avatarUrl}
-             alt={props.userFromComment.name}/>
-    );
-}
-
-function UserInfo(props){
-    return(
-        <div className="UserInfo">
-            <Avatar userFromComment={props.user}/>
-            <div className="UserInfo-name">
-                {props.user.name}
-            </div>
-        </div>
-    );
-}
-
-function Comment(props){
-    return(
-        <div className="Comment">
-            <UserInfo user={props.author}/>
-            <div className="Comment-text">
-                {props.text}
-            </div>
-            <div>
-                {formatDate(props.date)}
-            </div>
-        </div>
-    );
-}
-
-const comment={
-    date: new Date(),
-    text: 'I hope you enjoy learning React !!',
-    authors:{
-        name:'Hello Kitty',
-        avatarUrl: 'http://placekitten.com/g/64/64'
+    constructor(props){
+        super(props);
+        this.state={
+            date: new Date()
+        }
     }
-};
 
-ReactDOM.render(<Comment
-    date={comment.date}
-    text = {comment.text}
-    author={comment.authors}/>,
+    componentDidMount(){
+        this.timerID=setInterval(()=>{
+            this.tick()
+        },1000);
+    }
+
+    componentWillUnMount(){
+        clearInterval(this.timerID);
+    }
+
+    tick(){
+        this.setState({
+            date: new Date()
+        });
+    }
+
+
+    render(){
+        return(
+            <div>
+                <h1>Hello, world</h1>
+                <h2>{this.state.date.toLocaleTimeString()}</h2>
+            </div>
+        );
+    }
+}
+
+ReactDOM.render(<Clock />,
         document.getElementById('root'));
 
 
